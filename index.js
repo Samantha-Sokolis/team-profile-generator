@@ -1,5 +1,8 @@
 //Include packages needed for this application
 const inquirer = require("inquirer");
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 const fs = require("fs");
 const { generateHtml } = require("./lib/employee.js");
 
@@ -11,7 +14,7 @@ const addEmployee = () => {
                 type: "checkbox",
                 name: "addEmployee",
                 message: "Choose the employee role",
-                choices: ["engineer", "intern", "manager"],
+                choices: ["manager", "intern", "engineer"],
             },
         ])
         .then((input) => {
