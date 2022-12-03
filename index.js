@@ -1,9 +1,10 @@
 //Include packages needed for this application
 const inquirer = require("inquirer");
-const Manager = require("./lib/manager");
-const Engineer = require("./lib/engineer");
-const Intern = require("./lib/intern");
 const fs = require("fs");
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
+
 const { generateHtml } = require("./lib/employee.js");
 let idCounter = 1;
 let htmlCards = [];
