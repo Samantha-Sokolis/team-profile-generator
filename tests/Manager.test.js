@@ -1,5 +1,5 @@
-const Manager = require('./lib/manager');
-const manager = new Manager('Samantha', '100802', 'samanthasokolis1@gmail.com');
+const Manager = require('../lib/manager');
+const manager = new Manager('Samantha', '100802', 'samanthasokolis1@gmail.com', '369');
 
 
 test('test will see if the Manager object will ouput the constructor values', () => {
@@ -18,7 +18,7 @@ test('test if the id comes through via the getID() method', () => {
 });
 
 test('test if the email comes through via the getRole() method', () => {
-    expect(manager.role).toBe('Manager');
+    expect(manager.getRole()).toBe('Manager');
 });
 
 // additional info tested for manager - office number

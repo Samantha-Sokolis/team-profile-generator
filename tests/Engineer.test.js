@@ -1,5 +1,5 @@
-const Engineer = require('./lib/engineer');
-const engineer = new Engineer('Samantha', '100802', 'samanthasokolis1@gmail.com');
+const Engineer = require('../lib/engineer');
+const engineer = new Engineer('Samantha', '100802', 'samanthasokolis1@gmail.com','sam@github.com');
 
 
 test('test will see if the Engineer object will ouput the constructor values', () => {
@@ -18,7 +18,7 @@ test('test if the id comes through via the getID() method', () => {
 });
 
 test('test if the email comes through via the getRole() method', () => {
-    expect(engineer.role).toBe('Engineer');
+    expect(engineer.getRole()).toBe('Engineer');
 });
 
 // additional info tested for manager - gitHub username

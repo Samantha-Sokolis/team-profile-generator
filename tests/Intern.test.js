@@ -1,5 +1,5 @@
-const Intern = require('./lib/intern');
-const intern = new Intern('Bob', '100803', 'bobross@gmail.com', 'Melbourne University');
+const Intern = require('../lib/intern');
+const intern = new Intern('Bob','100803','bobross@gmail.com','Melbourne University');
 
 
 test('test will see if the Intern object will ouput the constructor values', () => {
@@ -22,7 +22,7 @@ test('test if the email comes through via the getEmail() method', () => {
 });
 
 test('test if the role comes through via the getRole() method', () => {
-    expect(intern.role).toBe('Intern');
+    expect(intern.getRole()).toBe('Intern');
 });
 
 // additional info tested for intern - school
