@@ -1,19 +1,19 @@
-// TEAM PROFILES
+// node modules
+const inquirer = require("inquirer");
+const fs = require("fs");
+// team profiles
 const Engineer = require("./lib/Engineer");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 
-// NODE MODULES
-const inquirer = require("inquirer");
-const fs = require("fs");
 
-// LINK TO PAGE CREATION
+// Link to generate page creation
 const generatePage = require("./src/template");
 
-// TEAM ARRAY
+
 const team = [];
 
-// START OF MANAGER PROMPTS
+// prompts to add manager first
 const addManager = () => {
     return inquirer.prompt ([
         {
@@ -81,9 +81,7 @@ const addManager = () => {
 
 const addEmployee = () => {
     console.log(`
-    ======================
      Create Team Profiles
-    ======================
     `);
 
     return inquirer.prompt ([
@@ -101,7 +99,7 @@ const addEmployee = () => {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log ("Please enter an employee's name!");
+                    console.log ("Please enter an employee's name");
                     return false; 
                 }
             }
@@ -112,7 +110,7 @@ const addEmployee = () => {
             message: "Please enter the employee's ID.",
             validate: nameInput => {
                 if  (isNaN(nameInput)) {
-                    console.log ("Please enter the employee's ID!")
+                    console.log ("Please enter the employee's ID")
                     return false; 
                 } else {
                     return true;
@@ -128,7 +126,7 @@ const addEmployee = () => {
                 if (valid) {
                     return true;
                 } else {
-                    console.log ('Please enter an email!')
+                    console.log ('Please enter an email')
                     return false; 
                 }
             }
@@ -142,7 +140,7 @@ const addEmployee = () => {
                 if (nameInput ) {
                     return true;
                 } else {
-                    console.log ("Please enter the employee's github username!")
+                    console.log ("Please enter the employee's github username")
                 }
             }
         },
@@ -155,7 +153,7 @@ const addEmployee = () => {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log ("Please enter the intern's school!")
+                    console.log ("Please enter the intern's school")
                 }
             }
         },
@@ -167,7 +165,7 @@ const addEmployee = () => {
         }
     ])
     .then(employeeData => {
-        // DATA FOR EMPLOYEE TYPES
+        // Employee data types
 
         let { name, id, email, role, github, school, confirmAddEmployee } = employeeData; 
         let employee; 
@@ -195,16 +193,14 @@ const addEmployee = () => {
 };
 
 
-// GENERATE INDEX.HTML PAGE 
+// Function to generate html file 
 const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
-        // IF ERROR
         if (err) {
             console.log(err);
             return;
-        // CREATE PROFILE
         } else {
-            console.log("Your team profile has been successfully created! Your profile is located in the 'dist' folder");
+            console.log("Your team profile has been successfully created in the 'dist' folder");
         }
     })
 }; 

@@ -22,5 +22,12 @@ SO THAT I have quick access to their emails and GitHub profiles
 - WHEN I decide to finish building my team
 - THEN I exit the application, and the HTML is generated
 
-## Notes and Resources:
+## Images and Links
+
+![Screenshot of application](/src/img/teamprofile_screenshot.png)
+
+Git Hub: https://github.com/Samantha-Sokolis/team-profile-generator
+
+Link to waklthrough video: https://watch.screencastify.com/v/gDR7nnDuUGbNzoFdHjtf
+
 

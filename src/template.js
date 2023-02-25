@@ -1,6 +1,6 @@
-// CREATE TEAM
+//Function to create team
+//manager card
 const generateTeam = (team) => {
-    // CREATE MANAGER HTML
     const generateManager = (manager) => {
       return `
           <div class="card employee-card">
@@ -18,8 +18,7 @@ const generateTeam = (team) => {
       </div>
           `;
     };
-  
-    // CREATE ENGINEER HTML
+  //engineer card
     const generateEngineer = (engineer) => {
       return `
           <div class="card employee-card">
@@ -38,7 +37,7 @@ const generateTeam = (team) => {
           `;
     };
   
-    // CREATE INTERN HTML
+//intern card
     const generateIntern = (intern) => {
       return `
           <div class="card employee-card">
@@ -58,7 +57,7 @@ const generateTeam = (team) => {
     };
   
     const html = [];
-  
+  //information sent to html cards
     html.push(
       team
         .filter((employee) => employee.getRole() === "Manager")
@@ -80,7 +79,7 @@ const generateTeam = (team) => {
     return html.join("");
   };
   
-  // FUNTIO
+
   module.exports = (team) => {
     return `
       <!DOCTYPE html>
