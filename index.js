@@ -1,106 +1,222 @@
-//Include packages needed for this application
+// TEAM PROFILES
+const Engineer = require("./lib/Engineer");
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+
+// NODE MODULES
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Manager = require("./lib/Manager.js");
-const Engineer = require("./lib/Engineer.js");
-const Intern = require("./lib/Intern.js");
 
-const { generateHtml } = require("./lib/employee.js");
-let idCounter = 1;
-let htmlCards = [];
+// LINK TO PAGE CREATION
+const generatePage = require("./src/template");
 
-// <!-- Hint: At index.js, you're going to write to team.html: first part of HTML + htmlCards.join() + last part of HTML -->
+// TEAM ARRAY
+const team = [];
 
-//Alternative that requires Classes
-//let employees = [new Manager, new Intern, ...]
-//employees[i].getRole() === "Manager" // <-- inside a for loop
-//depending on what type of role, you have different HTML, for example, a label for "School"
-
-// - THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
+// START OF MANAGER PROMPTS
 const addManager = () => {
-    return inquirer 
-        .prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "What is the team manager’s name?",
-            },
-              
-            {
-                  type: "input",
-                  name: "email",
-                  message: "Enter email address",
-              },
-            
-            {
-                type: "input",
-                name: "number",
-                message: "Enter office number",
-            },
-        ])
-        .then((input) => {
-            return input;
-        });
-  // Need to add additional questions here for Manager, Engineer and Intern
+    return inquirer.prompt ([
+        {
+            type: 'input',
+            name: 'name',
+            message: "Please enter the manager's name?", 
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log ("Please enter the manager's name!");
+                    return false; 
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "Please enter the manager's ID.",
+            validate: nameInput => {
+                if  (isNaN(nameInput)) {
+                    console.log ("Please enter the manager's ID!")
+                    return false; 
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Please enter the manager's email.",
+            validate: email => {
+                 valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+                } else {
+                    console.log ('Please enter an email!')
+                    return false; 
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: "Please enter the manager's office number",
+            validate: nameInput => {
+                if  (isNaN(nameInput)) {
+                    console.log ('Please enter an office number!')
+                    return false; 
+                } else {
+                    return true;
+                }
+            }
+        }
+    ])
+    .then(managerInput => {
+        const  { name, id, email, officeNumber } = managerInput; 
+        const manager = new Manager (name, id, email, officeNumber);
+
+        team.push(manager); 
+        console.log(manager); 
+    })
 };
 
 const addEmployee = () => {
-  return inquirer 
-      .prompt([
-          {
-              type: "checkbox",
-              name: "addEmployee",
-              message: "Choose the employee role",
-              choices: ["manager", "intern", "engineer"],
-          },
-      ])
-      .then((input) => {
-          return input;
-      });
-// Need to add additional questions here for Manager, Engineer and Intern
+    console.log(`
+    ======================
+     Create Team Profiles
+    ======================
+    `);
+
+    return inquirer.prompt ([
+        {
+            type: 'list',
+            name: 'role',
+            message: "Please choose your employee's role",
+            choices: ['Manager', 'Engineer', 'Intern']
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: "What's the name of the employee?", 
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log ("Please enter an employee's name!");
+                    return false; 
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "Please enter the employee's ID.",
+            validate: nameInput => {
+                if  (isNaN(nameInput)) {
+                    console.log ("Please enter the employee's ID!")
+                    return false; 
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Please enter the employee's email.",
+            validate: email => {
+                 valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+                } else {
+                    console.log ('Please enter an email!')
+                    return false; 
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: "Please enter the employee's github username.",
+            when: (input) => input.role === "Engineer",
+            validate: nameInput => {
+                if (nameInput ) {
+                    return true;
+                } else {
+                    console.log ("Please enter the employee's github username!")
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: "Please enter the intern's school",
+            when: (input) => input.role === "Intern",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log ("Please enter the intern's school!")
+                }
+            }
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add more team members?',
+            default: false
+        }
+    ])
+    .then(employeeData => {
+        // DATA FOR EMPLOYEE TYPES
+
+        let { name, id, email, role, github, school, confirmAddEmployee } = employeeData; 
+        let employee; 
+
+        if (role === "Engineer") {
+            employee = new Engineer (name, id, email, github);
+
+            console.log(employee);
+
+        } else if (role === "Intern") {
+            employee = new Intern (name, id, email, school);
+
+            console.log(employee);
+        }
+
+        team.push(employee); 
+
+        if (confirmAddEmployee) {
+            return addEmployee(team); 
+        } else {
+            return team;
+        }
+    })
+
 };
 
 
-//Function to write HTML file
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
-      if (err) throw err;
-      console.log("Your HTML file has been generated");
-    });
-  }
-  
-  // Function to initialize app
-  function init() {
-    addManager()
-      .then((input) => {
-        const manager = new Manager(input.name, idCounter, input.email, input.officeNumber);
-        idCounter++; 
-        const html = `<div class="col s12 m6">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">Manager: ${input.name}</span>
-            <span>Office Number: ${input.officeNumber}</span>
-            <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
-          </div>
-          <div class="card-action">
-            <a href="#">This is a link</a>
-          </div>
-        </div>
-      </div>`;
-      htmlCards.push(html); // That array now has the new element
+// GENERATE INDEX.HTML PAGE 
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        // IF ERROR
+        if (err) {
+            console.log(err);
+            return;
+        // CREATE PROFILE
+        } else {
+            console.log("Your team profile has been successfully created! Your profile is located in the 'dist' folder");
+        }
+    })
+}; 
 
-        console.log(input)
-        //return generateHtml(input);
-        //add new Manager
-      })
-      //.then((html) => {
-       // writeToFile("./team.html", html);
-      //})
-      //.catch((err) => {
-       // console.log(err);
-      //});
-  }
-  
-  // Function call to initialize app
-  init();
+addManager()
+  .then(addEmployee)
+  .then(team => {
+    return generatePage(team);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+ console.log(err);
+  });
